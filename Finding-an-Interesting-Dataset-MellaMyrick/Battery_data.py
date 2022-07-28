@@ -1,8 +1,54 @@
-import pandas
+import pandas as pd
+import seaborn as sns
 
-pandas.options.display.max_columns = None
-pandas.options.display.max_rows = None
+#pd.options.display.max_columns = None
+#pd.options.display.max_rows = None
 
-battery_life_data = pandas.read_csv("Battery_RUL.csv")
+#raw data
+battery_life_data = pd.read_csv("Battery_RUL.csv")
+battery_life_data
 
-print(battery_life_data)
+#Trimmed data
+updated_data = battery_life_data[['Cycle_Index', 'Discharge Time (s)', 'Charging time (s)', 'RUL']]
+updated_data
+
+# Answering question 1: What is the maximum battery cycle?
+max_battery_cycle = battery_life_data['Cycle_Index'].max()
+print(max_battery_cycle.round(3))
+
+# Answering question 2: What is the average discharge time? 
+avg_discharge_time = battery_life_data['Discharge Time (s)'].mean()
+print(avg_discharge_time.round(3))
+
+# Answering question 3: What is the average charge time?
+avg_charge_time = battery_life_data['Charging time (s)'].mean()
+print(avg_charge_time.round(3))
+
+# Answering question 4: Which variable has a positive correlation to remaining useful life?
+sns.pairplot(updated_data)
+
+print("Out of the 4 variables, no variable has a positive correlation to remaining useful life. However, it appears that there is a negative linear correlation between RUL and Cycle Index.")
+
+# Answering question 5: What type of correlation does charging time and discharge time have?
+updated_data.plot.scatter(x = 'Charging time (s)', y = 'Discharge Time (s)')
+updated_data.plot.scatter(x = 'Discharge Time (s)', y = 'Charging time (s)')
+
+print("No matter how the two are plotted, discharge and charging time have a positve linear correlation but not a strong relationship.")
+
+# Answering question 6: At what cycle does the RUL decrease?
+battery_life_data.plot.scatter(x = 'Cycle_Index', y = 'RUL')
+
+print("Based on the scatter plot, the RUL decreases instantaneously at Cycle Index 0. This makes sense because there is no way to reverse the wear that cars experience the moment they turn on. It is just like how most passenger vehicles depreciate in value the moment the owner purchases them and takes them off the lot.")
+
+# Answering question 7: Out of the 14 batteries, which one had the best RUL?
+
+
+# Answering question 8: What is the average max voltage discharge?
+avg_max_volt_discharge = battery_life_data['Max. Voltage Dischar. (V)'].mean()
+print(avg_max_volt_discharge.round(3))
+
+# Answering question 9: What is the average minimun voltage charge?
+avg_min_volt_charge = battery_life_data['Min. Voltage Charg. (V)'].mean()
+print(avg_min_volt_charge.round(3))
+
+# Answering question 10: What type of regression does the data have?
