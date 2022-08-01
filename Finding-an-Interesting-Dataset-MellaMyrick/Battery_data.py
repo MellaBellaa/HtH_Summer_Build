@@ -60,7 +60,7 @@ print('The average max voltage discharge is: ', avg_max_volt_discharge.round(3))
 avg_min_volt_charge = battery_life_data['Min. Voltage Charg. (V)'].mean()
 print('The average minimum voltage charge is: ', avg_min_volt_charge.round(3))
 
-# Answering question 10: What type of regression does the data have?
+# Answering question 10: Is the relationship between discharge and charging time similar to the relationship between discharge time and the time constant current?
 battery_life_data.plot.scatter(x = 'Charging time (s)', y = 'Discharge Time (s)')
 battery_life_data.plot.scatter(x = 'Time constant current (s)', y = 'Discharge Time (s)')
 
